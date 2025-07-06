@@ -1,0 +1,8 @@
+zig-out/
+zig-cache/
+*.o *.exe
+.vscode/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
