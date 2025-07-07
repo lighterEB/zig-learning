@@ -50,3 +50,41 @@ const isOk: bool = false;
 ```zig
 const name: []const u8 = "Hello!";
 ```
+
+## 2. 第二天
+### 2.1 if语句
+* Zig的`if`支持条件判断，可与`else` 和 `else if` 组合
+* 条件必须返回 `bool` 类型
+* 支持捕获值（类似模式匹配）
+```zig
+const std=@import("std");
+pub fn main() void {
+	const num: i32 = 56;
+	if (num > 0) {
+	    std.debug.print("Positive\n", .{});
+	} else if (num < 0) {
+	    std.debug.print("Nagative\n", .{});
+	} else {
+	    std.debug.print("Zero\n", .{});
+	}
+}
+```
+### 2.2 while语句
+* 支持 `break` 和 `continue` , 可带条件或捕获
+```zig
+var i:32 = 0;
+while (i < 5) : (i += 1) {
+    std.debug.print("i = {}\n", .{i});
+}
+```
+### 2.3 switch语句
+  * 用于多分支选择，支持整数、枚举、布尔等类型。
+  * 必须覆盖所有可能值（或使用`else`）
+```zig
+const value: u8 = 2;
+switch (value) {
+    1 => std.debug.print("One\n", .{}),
+    2 => std.debug.print("Two\n", .{}),
+    else => std.debug.print("Other\n", .{}),
+}
+```
