@@ -111,3 +111,19 @@ for (0..5) |i| {
 }
 ```
 
+### 3.2 函数
+- 定义：函数用 `fn` 定义，指定参数类型和返回值类型。
+- 语法：`fn name(param: Type) ReturnType { ... }`
+- 示例：
+```zig
+// 定义一个以 add 命名的函数，传入两个形参 x, y 都是 i32 整型 返回 i32 整型
+fn add(x:i32, y:i32) i32 {
+    return x + y; // 返回 x 与 y 的和
+}
+
+pub fn main() !void {
+    const result = add(3,4); // 定义一个 result 常量 将 执行 add 函数后返回的值赋值给result，这里传入 3，4两个实参 返回 7 赋值给result
+    std.debug.print("Sum: {}\n", .{result});
+}
+```
+* 注：`pub` 表示函数可被外部调用；`void` 表示无返回值。
