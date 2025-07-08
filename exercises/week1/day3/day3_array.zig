@@ -5,4 +5,10 @@ pub fn main() !void {
     for (array, 0..) |value, index| {
         print("Value: {}, Index: {d}\n", .{ value, index });
     }
+
+    // 迭代切片
+    const num = array[1..4];
+    for (num) |i| {
+        print("Num: {d}\n", .{i});
+    }
 }
