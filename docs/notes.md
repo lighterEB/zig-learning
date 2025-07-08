@@ -88,3 +88,26 @@ switch (value) {
     else => std.debug.print("Other\n", .{}),
 }
 ```
+
+## 3. 第三天
+### 3.1 for循环
+* Zig的for循环主要用于迭代数组、切片或范围。
+* 语法：`for (items) |item| {...}` , 支持捕获值(`item`)。
+示例（迭代数组）：
+```zig
+const std=@import("std");
+pub fn main() !void {
+    const numbers = [_]i32{1, 2, 3, 4, 5};
+    for (numbers) |num| {
+        std.debug.print("Number: {}\n", .{num});
+    }
+}
+```
+
+示例 （迭代范围）：
+```zig
+for (0..5) |i| {
+    std.debug.print("Index: {}\n", .{i});
+}
+```
+
