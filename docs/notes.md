@@ -127,3 +127,40 @@ pub fn main() !void {
 }
 ```
 * 注：`pub` 表示函数可被外部调用；`void` 表示无返回值。
+
+##  4.第四天
+### 4.1 错误类型（error union）
+* Zig使用 `error union`表示可能失败的操作，语法为`!T`(T是返回值类型)
+* 错误集用`error`定义，例如：
+```zig
+const MyError = error{InvalidInput, Overflow}
+```
+* 函数返回错误联合：
+```zig
+fn mightFail() !i32 {
+    return error.InvalidInput; // 失败
+    return 24; // 成功
+}
+```
+
+### 4.2 try和catch
+* `try`: 尝试执行可能返回错误的表达式，如果失败，立即返回错误。
+```zig
+const result = try mightFail()
+```
+* `catch`: 捕获错误平处理
+```zig
+const result = mightFail() catch |err| {
+    std.debug.print("Error: {}\n", .{err});
+    return;
+}
+```
+
+### 4.3 errdefer
+* 在函数返回错误时执行清理操作:
+```zig
+fn example() MyError!void {
+    errdefer std.debug.print("Cleanup on error\n", .{});
+    return error.InvalidInput;
+}
+```
