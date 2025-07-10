@@ -164,3 +164,41 @@ fn example() MyError!void {
     return error.InvalidInput;
 }
 ```
+
+## 5.第五天
+### 5.1 动态数组
+* `std.ArrayList`: 是Zig标准库提供的动态数组，支持添加、删除元素。
+* 需要分配器（`std.mem.Allocator`）管理内存
+* 常用方法：
+	* `init(allocator)`：初始化列表。
+	* `append(item)`: 添加元素。
+	* `pop()`：移除最后一个元素。
+	* `deinit()`：释放内存。
+* 示例：
+```zig
+const std=@import("std");
+pub fn main() !void {
+	var arena = std.heap.ArenaAllocator.init(std.heap.page_allocator);
+	defer arena.deinit();
+	const allocator = arena.allocator();
+
+	var list = std.ArrayList(i32).init(allocator);
+	defer list.deinit();
+
+	try list.append(42);
+	try list.append(100);
+
+	std.debug.print("List: {d}\n", .{list.items});
+}
+```
+
+*注：`try`用于处理`append`可能返回的内存分配错误。*
+### 5.2 切片操作
+* 切片是数组的视图，类型为`[]T`(`T`是元素类型)
+* 创建：`array[start..end]`。
+* 示例：
+```zig
+const array = [_]i32{1,2,3,4,5};
+const slice = array[1..3]; // 包含2,3
+std.debug.print("Slice: {d}\n", .{slice});
+```
