@@ -202,3 +202,34 @@ const array = [_]i32{1,2,3,4,5};
 const slice = array[1..3]; // 包含2,3
 std.debug.print("Slice: {d}\n", .{slice});
 ```
+
+## 6.第六天
+### 6.1 学习 `std.fs` 和 `std.io`
+* `std.io`
+	1. 提供输入输出功能，如`std.io.getStdOut` (标准输出) 和 `std.io.getStdIn`（标准输入）
+	2. `std.io.Writer`接口用于格式化输出，`std.debug.print`是其简单的封装
+	示例：
+```zig
+	const std=@import("std");
+	pub fn main() !void {
+		const stdout = std.io.getStdOut().writer();
+		try stdout.print("Value: {d:.2}\n", .{3.1415926});
+	}
+```
+* 字符串流（模拟文件操作）
+	使用`std.io.fixedBufferStream`模拟文件读写
+	示例：
+```zig
+var buffer: [100]u8 = undefined;
+var stream = std.io.fixedBufferStream(&buffer);
+const writer = stream.writer();
+try writer.print("Hello, Zig!");
+std.debug.print("Buffer content: {s}\n", .{stream.getWritten()});
+```
+* `std.fs`
+	* 提供文件系统操作，如`std.fs.cwd().openFile`和 `std.fs.File.read`
+	示例：
+```zig
+const file = try std.fs.cwd().openFile("example.txt", .{});
+defer file.close();
+```
