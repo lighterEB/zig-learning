@@ -233,3 +233,31 @@ std.debug.print("Buffer content: {s}\n", .{stream.getWritten()});
 const file = try std.fs.cwd().openFile("example.txt", .{});
 defer file.close();
 ```
+## 第7天
+
+### 7.1 结构体（struct）
+* 用于定义复合数据类型，包含字段和方法。
+* 语法：`const StructName = struct { field: Type };`
+* 支持方法定义（函数绑定到结构体）
+* 实例：
+```zig
+const std=@import("std");
+const Point = struct {
+	x: f32,
+	y: f32,
+	
+	// Method to calculate distance to another point
+	fn distance(self: Point, other: Point) f32 {
+		const dx = self.x - other.x;
+		const dy = self.y - other.y;
+		return std.math.sqrt(dx * dx + dy * dy);
+	}
+};
+
+pub fn main() !void {
+	const p1 = Point{ .x=0.0, .y=0.0 };
+	const p2 = Point{ .x=3.0, .y=4.0 };
+	const dist = p1.distance(p2);
+	std.debug.print("Distance: {d:.2}\n", .{dist} );
+}
+```
