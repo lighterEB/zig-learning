@@ -1,4 +1,4 @@
-# Zig Learning Notes
+# Zig Learning Notes - Week 1
 ## 1.第一天
 
 ### 1.1 基本语法
@@ -261,3 +261,16 @@ pub fn main() !void {
 	std.debug.print("Distance: {d:.2}\n", .{dist} );
 }
 ```
+### 7.2 枚举
+* 用于定义一组命名的常量值
+* 语法 `const EnumName = enum { value1, value2 };`
+* 可指定底层类型（如 `enum(u8)`)
+* 示例：
+```zig
+const State = enum { idle, running, stop };
+pub fn main() void {
+	const current = State.running;
+	std.debug.print("State: {}\n", .{current});
+}
+```
+
