@@ -55,3 +55,40 @@ pub fn main() !void {
 	std.debug.print("Float: {d:.2} \n", .{v.float});
 }
 ```
+### 2.2 标签联合（`union(enum)`）
+* 使用`enum`指定活动字段，增加类型安全性。
+* 语法：`const UnionName = union(EnumName){ variant1: Type1, variant2: Type2 };`
+* 使用`switch`处理不同变体
+* 示例：
+```zig
+const std=@import("std");
+
+  
+
+const Type = enum{ int, float };
+
+const Value = union(Type){
+	int: i32,
+	float: f32,
+};
+
+  
+
+pub fn main() !void {
+
+	const v = [_]Value{
+		.{ .int = 10 },
+		.{ .float = 3.14 },
+		.{ .int = 20 },
+	};
+	
+	  
+	
+	for (v) |item| {
+		switch (item) {
+			.int => |i| std.debug.print("Integer: {d}\n", .{i}),
+			.float => |f| std.debug.print("Float: {d:.2}\n", .{f}),
+		}
+	}
+}
+```
