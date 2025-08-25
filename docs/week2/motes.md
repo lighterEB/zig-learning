@@ -92,3 +92,37 @@ pub fn main() !void {
 	}
 }
 ```
+
+## 3.第三天
+### 3.1 `comptime`
+* Zig的`comptime`允许在编译时执行代码，生成常量或优化逻辑。
+* 用于生成类型、计算常量、性能优化。
+* 示例（编译时数组）：
+```zig
+const std=@import("std");
+const fib = blk: {
+	var array: [10]i32 = undefined;
+	array[0] = 0;
+	array[1] = 1;
+	for(2..10) |i| {
+		array[i] = array[i-1] + array[i-2];
+	}
+	break :blk array;
+};
+
+pub fn main() !void {
+	std.debug.print("Fibonacci: {d}\n", .{fib});
+}
+```
+* 示例（泛型函数）
+```zig
+const std=@import("std");
+fn printValue(comptime T: type, value: T) void {
+	std.debug.print("Value: {}\n", .{value});
+}
+
+pub fn main() !void {
+	printValue(i32, 42);
+	printValue(f32, 3.14);
+}
+```
