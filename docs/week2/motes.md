@@ -166,3 +166,29 @@ pub fn main() !void {
 	}
 }
 ```
+
+## 5.第五天
+### 5.1 `std.testing`与单元测试
+* Zig测试框架：
+	* Zig提供内置测试框架，通过`std.testing`模块实现
+	* 测试用`test`关键自定义，运行时使用`zig test <file>.zig`
+	* 常用函数：
+		* `std.testing.expect(expr)`: 断言表达式为真
+		* `std.testing.expectEqual(expected, actual)`：断言两值相等
+		* `std.testing.expectError(expected, expr)`: 断言表达式返回特定错误
+* 示例（简单测试）：
+```zig
+const std=@import("std");
+test "add 1 + 1" {
+	try std.testing.expectEqual(2, 1 + 1);
+}
+```
+输出：
+```bash
+[2025-08-25T14:48:53.886Z] Running test: day5_testing.zig - add 1 + 1
+1/1 day5_testing.test.add 1 + 1...OK
+All 1 tests passed.
+```
+* 测试组织：
+	* 测试块以`test "description" { ... }`定义
+	* 可以在模块中定义测试，与代码分离
