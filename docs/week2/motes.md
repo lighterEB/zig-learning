@@ -126,3 +126,43 @@ pub fn main() !void {
 	printValue(f32, 3.14);
 }
 ```
+
+## 4.第四天
+### 4.1 Zig模块系统和代码组织
+*系统模块（`@import`、`pub`）：*
+* Zig使用`@import`导入模块，`pub`标记公开的符号（函数、变量、类型等）。
+* 标准库模块通过`@import("std")`导入，自定义模块通过文件路径导入。
+* 示例：
+```zig
+const std=@import("std");
+const my_module=@import("my_module.zig");
+
+pub fn main() !void {
+	std.debug.print("Standard library print\n", .{});
+	my_module.sayHello(); // 自定义模块的方法
+}
+```
+自定义模块：
+```zig
+pub fn sayHello() void {
+	@import("std").debug.print("Hello from my_module!\n", .{});
+}
+```
+*代码组织的最佳实践：*
+* 将功能分组到模块文件（如 `math.zig`、`utilsz.zig`)
+* 使用`pub`暴露需要跨模块访问的函数或类型。
+* 文件名小写，使用下划线（例如 `my_module.zig`）
+* 在项目根目录或子目录（如`src/`）存放模块
+*字符串处理（`std.mem`）*
+* 标准库`std.mem`提供字符串操作，如`std.mem.eql`（比较）、`std.mem.split`（分割）
+* 示例：
+```zig
+const std=@import("std");
+pub fn main() !void {
+	const str = "Hello,World!";
+	var iter = std.mem.splitAny(u8,str,",");
+	while (iter.next()) |part| {
+		std.debug.print("Part: {s}\n", .{part});
+	}
+}
+```
